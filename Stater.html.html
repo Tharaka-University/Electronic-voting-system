@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width",initial-scale=1,0>
+        <title>Electronic Voting System</title>
+        <style>
+            body{
+                font-family:Arial,sans-serif;
+                text-align: center;
+            }
+
+            container{
+                max-width: 400px;
+                margin: 0 auto;
+                padding:20px;
+            }
+
+            hidden{
+                display: none;
+            }
+
+            button{
+                padding: 10px 20px;
+                margin-top: 10px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Electronic Voting System</h1>
+
+            <div id="register-section">
+                <h2>Register</h2>
+                <input type="text" id="reg-username" placeholder="Enter username" required="username"><br> 
+                    <input type="student ID" id="student-ID" placeholder="Enter student ID" required="student ID"><br>
+                        <button type="button">Register</button>
+                        <p>Already registerd? <a href="#" onclick="showLogin()">Login here</a></p>
+            </div>
+
+            <div id="Login-section" class="hidden">
+                <h2>Login</h2>
+                <input type="text" id="login-username" placeholder="Enter username" required="username"><br>
+                    <input type="STUDENT id ID" id="student-ID" placeholder="Enter student ID" required="STUDENT id"><br>
+                        <button type="submit">Login</button>
+                        <p>Don't have an account? <a href="#"><onclick="showRegister()">Register here</a></p>
+            </div>
+
+            <div id="vote-section" class="hidden">
+                <h2>Vote for a Candidate</h2>
+                <p>Select your Candidate below:</p>
+                <label><input type="radio" name="candidate" value="Candidate 1">Candidate 1</label><br>
+                <label><input type="radio" name="candidate" value="Candidate 2">Candidate 2</label><br>
+                <label><input type="radio" name="candidate" value="Candidate 3">Candidate 3</label><br>
+                <button class="button" onclick="submitVote()">Submit Vote</button><br>
+                <button class="button" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <script>
+            let users = [];//store users for Demo purposes
+            letcurrentuser = null;//track logged-in user
+            let votes = {};//track votes for each candidate
+
+            //show registration form by default
+            document.getElementById('registerForm').style.display = 'block';
+
+            //registration function
+            function register(){
+                const username = document.getElementById('registerusername').value;
+                const password = document.getElementById('registerpassword').value;
+
+            if (!username || !password){
+                document.getElementById('registerMessage').textcontent = 'Please fill in all fields.';
+                return;
+            }
+
+            //check if username already exists
+            if (users.some(user =>user.username === username)){
+                document.getElementById('registerMessage').textcontent = 'Username already exists.';
+                return;
+            }
+
+            users.push({username,password});
+            document.getElementById('registerMessage').textcontent = 'Registration successful. Please log in.';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            }
+
+            //Login Function
+            function login(){
+                const username = document.getElementById('loginUsername').value;
+                const password= document.getElementById('loginPassword').value;
+
+                const user = users.find(u =>u.username === username && u.password === password);
+            }
+
+            if(!user){
+                document.getElementById('loginMessage').textcontent = 'Invalid username or Password';
+                return;
+            }
+
+            currentUser = username;{
+            document.getElementById('loginMessage').textcontent = '';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('voteSection').style.display = 'block';
+        }
+
+        //submit vote function
+        function submitVote(){
+            const selectedCandidate = document.getElementById('candidateSelected').value;
+
+            if(!votes[selectedCandidate]){
+                votes[selectedCandidate] = 0;
+            }
+            votes[selectedCandidate] += 1;
+
+            document.getElementById('voteMessage').textcontent = 'Your vote has been submitted.Thankyou!';
+            //display votes in console (for demo)
+            console.log('Votes:', votes);
+        }
+
+        //Logout Function
+        function logout(){
+            currentuser = null;
+            document.getElementById('voteSection').style.display = 'none';
+            document.getElementById('logForm').style.display = 'block';
+            document.getElementById('loginUsername').value ='';
+            ddocument.getElementById('loginPassword').value ='';
+            document.getElementById('loginMessage').textcontent ='';
+            document.getElementById('voteMessage').textcontent = '';
+        }
+        </script>
+    </body>
+</html>
