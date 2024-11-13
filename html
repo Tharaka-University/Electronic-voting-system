@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+ <head>
+    <title>Electronic Voting System</title>
+    <link rel="stylesheet" href="style.Css">
+ </head>  
+ <body>
+    <div class="container">
+        <h1>Electronic Voting System</h1>
+        <p>Select your candidate:</p>
+
+        <div class="candidates">
+            <div>
+                <input type="radio" id="candidate1" name="candidate" value="candidate 1">
+                <label for="candidate1">Candidate 1</label>
+            </div>
+            <div>
+                <input type="radio" id="candidate2" name="candidate" value="candidate 2">
+                <label for="candidate2">Candidate 2</label>
+            </div>
+            <div>
+                <input type="radio" id="candidate3" name="candidate" value="candidate3">
+                <label for="candidate3">Candidate 3</label>
+            </div>
+        </div>
+
+        <button id="voteButton">Vote</button>
+        <button id="resultsButton">View Results</button>
+
+        <div id="resultSection" class="hidden">
+            <h2>Results</h2>
+            <p>Candidate 1: <span id="candidate1Votes">0</span>votes</p>
+            <p>Candidate 2: <span id="candidate2Votes">0</span>votes</p>
+            <p>Candidate 3: <span id="candidate3Votes">0</span>votes</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+ </body> 
+</html>
