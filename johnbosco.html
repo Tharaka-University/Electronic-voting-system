@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Electronic Voting System</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+			background-image: url(wall.jpeg);
+		}
+
+		.container {
+			text-align: center;
+			margin: 10px;
+			background: white;
+			border-radius: 10px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.candidate button {
+			text-align: center;
+			margin: 10px;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			background-color: #28a745;
+			
+			color: white;
+			border-radius: 5px;
+			width: 200px;
+		}
+
+		h2 {
+			text-align: center;
+		}
+
+		.form-group {
+			margin-bottom: 15px;
+			width: 400px;
+		}
+
+		button {
+			width: 100%;
+			background-color: #007bff;
+			color: blue;
+			border: none;
+			cursor: pointer;
+			padding: 10px;
+		}
+
+		.button:hover {
+			background-color: #0056b3;
+		}
+
+		.logout, .votes-info {
+			margin-top: 20px;
+			text-align: center;
+		}
+
+		.candidate-buttons {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+
+		.candidate button {
+			margin: 10px;
+			width: 200px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<!-- Login Section -->
+		<div id="Login">
+			<h2>Login</h2>
+			<div class="form-group">
+				<label for="login-email">Email:</label>
+				<input type="email" id="login-email" placeholder="Enter your email">
+			</div>
+			<div class="form-group">
+				<label for="login-password">Password:</label>
+				<input type="password" id="login-password" placeholder="Password">
+			</div>
+			<button class="button" onclick="login()">Login</button>
+			<p><a href="#" onclick="showRegister()">Don't have an account? Register here</a></p>
+		</div>
+
+		<!-- Register Section -->
+		<div id="register" style="display: none;">
+			<h2>Register</h2>
+			<div class="form-group">
+				<label for="register-email">Email:</label>
+				<input type="email" id="register-email" placeholder="Enter your email">
+			</div>
+			<div class="form-group">
+				<label for="register-password">Password:</label>
+				<input type="password" id="register-password" placeholder="Enter your Password">
+			</div>
+			<button class="button" onclick="register()">Register</button>
+			<p><a href="#" onclick="showLogin()">Already have an account? Login here</a></p>
+		</div>
+
+		<!-- Vote Section -->
+		<div id="vote-section" style="display: none;">
+			<h2>Vote for your candidates</h2>
+			
+			<!-- Candidate Buttons -->
+			<div class="candidate-buttons">
+				<div class="candidate">
+					<button onclick="selectCandidate(1)">Candidate 1: John Doe (President)</button>
+				</div>
+				<div class="candidate">
+					<button onclick="selectCandidate(2)">Candidate 2: Jane Smith (Vice President)</button>
+				</div>
+				<div class="candidate">
+					<button onclick="selectCandidate(3)">Candidate 3: Robert Brown (Secretary)</button>
+				</div>
+			</div>
+
+			<!-- Submit Vote -->
+			<button class="button" onclick="submitVote()">Submit Vote</button>
+
+			<div class="votes-info">
+				<p>Votes Submitted: <span id="votes-submitted">0</span></p>
+				<p>Total Votes: <span id="total-votes">0</span></p>
+			</div>
+
+			<div class="logout">
+				<button class="button" onclick="logout()">Logout</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		let votesSubmitted = 0;
+		let totalVotes = 0;
+		let selectedCandidate = null;
+
+		function showLogin() {
+			document.getElementById('Login').style.display = 'block';
+			document.getElementById('register').style.display = 'none';
+			document.getElementById('vote-section').style.display = 'none';
+		}
+
+		function showRegister() {
+			document.getElementById('Login').style.display = 'none';
+			document.getElementById('register').style.display = 'block';
+		}
+
+		function login() {
+			document.getElementById('Login').style.display = 'none';
+			document.getElementById('vote-section').style.display = 'block';
+		}
+
+		function register() {
+			document.getElementById('register').style.display = 'none';
+			document.getElementById('Login').style.display = 'block';
+		}
+
+		// Function to select a candidate
+		function selectCandidate(candidateId) {
+			selectedCandidate = candidateId;
+			alert("You have selected " + getCandidateName(candidateId));
+		}
+
+		// Function to get candidate's name based on their ID
+		function getCandidateName(candidateId) {
+			switch(candidateId) {
+				case 1:
+					return "John Doe (President)";
+				case 2:
+					return "Jane Smith (Vice President)";
+				case 3:
+					return "Robert Brown (Secretary)";
+				default:
+					return "Unknown Candidate";
+			}
+		}
+
+		// Function to submit vote
+		function submitVote() {
+			if (selectedCandidate === null) {
+				alert("Please select a candidate before submitting your vote!");
+				return;
+			}
+
+			votesSubmitted++;
+			totalVotes++;
+			document.getElementById('votes-submitted').innerText = votesSubmitted;
+			document.getElementById('total-votes').innerText = totalVotes;
+			alert("Vote for " + getCandidateName(selectedCandidate) + " submitted successfully!");
+		}
+
+		// Function to log out
+		function logout() {
+			votesSubmitted = 0;
+			totalVotes = 0;
+			selectedCandidate = null;
+			document.getElementById('votes-submitted').innerText = votesSubmitted;
+			document.getElementById('total-votes').innerText = totalVotes;
+			document.getElementById('vote-section').style.display = 'none';
+			document.getElementById('Login').style.display = 'block';
+		}
+	</script>
+
+</body>
+</html>
